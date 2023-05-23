@@ -13,19 +13,19 @@ export class LoginUseCase {
     async execute(
         data: LoginRequestDTO
     ) {
-        const userAlreadExists = await this.usersRepository.UserAlreadExists(data.email);
-        if (userAlreadExists) {
             const user = await this.usersRepository.findByEmail(data.email);
             if (user) {
                 const mathPass = await PasswordEncryptor.comparePasswords(data.password, user.password);
+                console.log('mathPass', mathPass);
                 if (mathPass) {
                     const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user);
-                    if (userTokenAlreadExists != undefined) {
-                        if (JWTservice.JWTVerifier(userTokenAlreadExists.token)) {
+                    if (userTokenAlreadExists != (undefined && {})) {
+                        if (!JWTservice.JWTVerifier(userTokenAlreadExists.token)) {
                             userTokenAlreadExists.token = JWTservice.sign({ uid: userTokenAlreadExists.user._id });
                             await this.usersTokenRepository.updateToken(user, userTokenAlreadExists.token);
                             return userTokenAlreadExists;
                         }
+                        return userTokenAlreadExists;
                     }
                     const token = JWTservice.sign({ uid: user._id });
                     await this.usersTokenRepository.create({ user, token });
@@ -33,6 +33,5 @@ export class LoginUseCase {
                 }
                 throw 'Password not match';
             }
-        }
     }
 }

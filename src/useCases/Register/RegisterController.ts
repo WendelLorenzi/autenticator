@@ -10,11 +10,12 @@ export class RegisterController {
         const { name, email, password } = request.body;
 
         try {
-            await this.registerUseCase.execute({
+            const token = await this.registerUseCase.execute({
                 name,
                 email,
                 password
             });
+            if (token) return response.json({ "acessToken": token });
             return response.status(200).send();
         }
         catch {

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { UserToken } from "../../entities/UserToken";
 import { LoginUseCase } from "./LoginUseCase";
 
 export class LoginController {
@@ -15,8 +14,12 @@ export class LoginController {
                 email,
                 password
             });
-            const send = new UserToken({ user: usertoken?.user, token: usertoken?.token });
-            return response.json(send);
+            if (typeof usertoken != 'string' && usertoken != undefined) {
+                return response.json({ "acessToken": usertoken?.token });
+            }
+            return response.status(400).json({
+                message: 'Password not match'
+            });
         }
         catch {
             return response.status(400).json({

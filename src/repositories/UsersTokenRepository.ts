@@ -17,11 +17,11 @@ export class UsersTokenRepository implements IUsersTokenRepository {
 
     async TokenExist(user: User): Promise<UserToken | undefined> {
       try {
-          const document = await this.userToken.findOne({ user: user });
+          const document = await this.userToken.find({ user: { $in: [user] } });
           if(!document) {
             return new UserToken({});
           }
-          return document;
+          return new UserToken({ user: document[0].user, token: document[0].token });
       } catch (err) {
         console.log('erro user bd', err);
       }
@@ -39,4 +39,3 @@ export class UsersTokenRepository implements IUsersTokenRepository {
       }
     }
 }
-

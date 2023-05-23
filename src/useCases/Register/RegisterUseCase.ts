@@ -13,10 +13,10 @@ export class RegisterUseCase {
     async execute(
         data: RegisterRequestDTO
     ) {
-        // const userAlreadExists = await this.usersRepository.UserAlreadExists(data.email);
-        // if (userAlreadExists) {
-        //     throw new Error('User alread exists');
-        // }
+        const userAlreadExists = await this.usersRepository.UserAlreadExists(data.email);
+        if (userAlreadExists) {
+            throw new Error('User alread exists');
+        }
         await PasswordEncryptor.hashPassword(data.password).then(hash => {
             data.password = hash;
         });
@@ -29,8 +29,9 @@ export class RegisterUseCase {
                     token
                 };
                 await this.usersTokenRepository.create(userToken);
+                await this.usersRepository.create(user);
+                return userToken.token;
             }
         }
-        await this.usersRepository.create(user);
     }
 }
