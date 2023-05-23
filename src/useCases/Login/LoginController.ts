@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UserToken } from "../../entities/UserToken";
 import { LoginUseCase } from "./LoginUseCase";
 
-export class RegisterController {
+export class LoginController {
     constructor(
         private loginUseCase: LoginUseCase,
     ) {}
