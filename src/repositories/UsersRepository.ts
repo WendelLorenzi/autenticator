@@ -27,6 +27,19 @@ export class UsersRepository implements IUsersRepository {
       }
     }
 
+    async findById(id: string): Promise<User> {
+      try {
+          const document = await this.user.findOne({ _id: id });
+          if (!document) {
+            throw new Error('User not found');
+          }
+          return document;
+      } catch (err) {
+        console.log('Error accessing user in the database:', err);
+        throw err;
+      }
+    }
+
     async UserAlreadExists(mail: string): Promise<boolean> {
       try {
           const document = await this.user.findOne({email: mail});

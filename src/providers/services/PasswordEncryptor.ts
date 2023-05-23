@@ -2,9 +2,11 @@ import bcrypt from 'bcrypt';
 
 class PasswordEncryptor {
   static async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    return hashedPassword;
+    if (process.env.HASH_SALT) {
+      const hashedPassword = await bcrypt.hash(password, Number(process.env.HASH_SALT));
+      return hashedPassword;
+    }
+    return '';
   }
 
   static async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {

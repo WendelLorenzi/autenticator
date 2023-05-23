@@ -38,4 +38,18 @@ export class UsersTokenRepository implements IUsersTokenRepository {
         console.log('erro user bd', err);
       }
     }
+
+    async deleteUserToken(usertoken: UserToken): Promise<boolean | undefined> {
+      try {
+          const document = await this.userToken.deleteOne({ usertoken });
+          console.log('document delet', document);
+          if(document.deletedCount === 0) {
+            return false;
+          }
+          return true;
+      } catch (err) {
+        console.log('erro user bd', err);
+        return undefined;
+      }
+    }
 }

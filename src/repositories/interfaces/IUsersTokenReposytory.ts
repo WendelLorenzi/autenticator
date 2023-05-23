@@ -5,4 +5,5 @@ export interface IUsersTokenRepository {
     create(user: UserToken): Promise<void>;
     TokenExist(user: User): Promise<UserToken | undefined>;
     updateToken(user: User, newToken: string): Promise<void>;
+    deleteUserToken(usertoken: UserToken): Promise<boolean | undefined>;
   }
