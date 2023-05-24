@@ -10,16 +10,17 @@ export class LoginController {
         const { email, password } = request.body;
 
         try {
-            const usertoken = await this.loginUseCase.execute({
-                email,
-                password
-            });
-            if (typeof usertoken != 'string' && usertoken != undefined) {
-                return response.json({ "acessToken": usertoken?.token });
+            if (email && password) {
+                const usertoken = await this.loginUseCase.execute({
+                    email,
+                    password
+                });
+                if (typeof usertoken != 'string' && usertoken != undefined) {
+                    return response.status(200).json({ "acessToken": usertoken?.token });
+                }
+                return response.status(401).end();
             }
-            return response.status(400).json({
-                message: 'Password not match'
-            });
+            return response.status(400).end();
         }
         catch {
             return response.status(400).json({

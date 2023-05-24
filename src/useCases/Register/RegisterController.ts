@@ -15,7 +15,7 @@ export class RegisterController {
                 email,
                 password
             });
-            if (token) return response.json({ "acessToken": token });
+            if (token) return response.status(200).json({ "acessToken": token });
             return response.status(200).send();
         }
         catch {

@@ -52,4 +52,18 @@ export class UsersTokenRepository implements IUsersTokenRepository {
         return undefined;
       }
     }
+
+    async getUserToken(token: string): Promise<UserToken | undefined> {
+        try {
+            const document = await this.userToken.findOne({ token });
+            if(document) {
+              return new UserToken(document);
+            }
+            return undefined;
+        } catch (err) {
+          console.log('erro user bd', err);
+          return undefined;
+        }
+      }
 }
+

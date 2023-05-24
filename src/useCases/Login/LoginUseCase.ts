@@ -16,7 +16,6 @@ export class LoginUseCase {
             const user = await this.usersRepository.findByEmail(data.email);
             if (user) {
                 const mathPass = await PasswordEncryptor.comparePasswords(data.password, user.password);
-                console.log('mathPass', mathPass);
                 if (mathPass) {
                     const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user);
                     if (userTokenAlreadExists != (undefined && {})) {
