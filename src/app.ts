@@ -3,13 +3,16 @@ import { router } from './routes'
 import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './providers/mongoDB/connection';
+import swagguerUi from 'swagger-ui-express';
+import swaggerDocs from './swagger.json';
 
-const app = express()
+const app = express();
 
 connectDB();
 
-app.use(express.json())
-app.use(router)
+app.use(express.json());
+app.use(router);
+app.use('/docs', swagguerUi.serve, swagguerUi.setup(swaggerDocs));
 
 // app.use((req, res, next) => {
 //     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,4 +30,4 @@ app.use(cors());
   
 // app.use(cors(corsOptions));
 
-export { app }
+export { app };

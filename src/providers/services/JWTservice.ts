@@ -12,18 +12,18 @@ const sign = (data: IJWTData) => {
     return token;
 }
 
-const verify = (tokn: string): IJWTData | 'JWT_SECRET_NOT_FOUND' | 'INVALID_TOKEN' => {
+const verify = (tokn: string): IJWTData | { "error": 'JWT_SECRET_NOT_FOUND' } | { "error":'INVALID_TOKEN' } => {
     if(!process.env.JWT_SECRET) {
-        return 'JWT_SECRET_NOT_FOUND';
+        return { "error": 'JWT_SECRET_NOT_FOUND' };
     }
     try {
         const decoded = jwt.verify(tokn, process.env.JWT_SECRET);
         if(typeof decoded === 'string') {
-            return 'INVALID_TOKEN';
+            return { "error":'INVALID_TOKEN' };
         }
         return decoded as IJWTData;
     } catch (err) {
-        return 'INVALID_TOKEN';
+        return { "error":'INVALID_TOKEN' };
     }
     
 }

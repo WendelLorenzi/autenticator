@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.n",
+    "info": {
+        "title": "User Autenticator",
+        "contact": {
+            "email": "wlorenzi17@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000/",
+            "description": "Local"
+        },
+        {
+            "url": "https://autenticator-app.herokuapp.com/",
+            "description": "Produção"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "sumary": "Cadastro de usuarios",
+                "description": "Rota fechada - é necessário estar logado para cadastrar um novo usuario",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "_id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "passwordHash": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "name": "Teste",
+                                "email": "teste@teste.com",
+                                "password": "senha"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "sumary": "Login e autenticação de usuarios",
+                "description": "Se os paramentros passados corresponderem com as regras de negócio, o retorno será um token JWT com expiração após 24 horas",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "_id": {
+                                        "type": "string"
+                                    },
+                                    "user": {
+                                        "type": "User"
+                                    },
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "email": "teste@teste.com",
+                                "password": "senha"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

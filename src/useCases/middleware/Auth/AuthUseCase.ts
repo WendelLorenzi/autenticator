@@ -10,6 +10,7 @@ export class AuthUseCase {
         data: AuthRequestDTO
     ) {
         if (data.token) {
+            console.log('data.token', data.token);
             const userToken = await this.userTokenRepository.getUserToken(data.token);
             if (userToken != undefined) {
                 if (JWTservice.JWTVerifier(userToken.token)) {

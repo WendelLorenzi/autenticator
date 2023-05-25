@@ -15,7 +15,7 @@ export class LoginController {
                     email,
                     password
                 });
-                if (typeof usertoken != 'string' && usertoken != undefined) {
+                if (typeof usertoken != 'string' && usertoken != undefined) {                   
                     return response.status(200).json({ "acessToken": usertoken?.token });
                 }
                 return response.status(401).end();
