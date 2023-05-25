@@ -5,29 +5,15 @@ import 'dotenv/config';
 import connectDB from './providers/mongoDB/connection';
 import swagguerUi from 'swagger-ui-express';
 import swaggerDocs from './swagger.json';
+import { json, urlencoded  } from 'body-parser';
 
 const app = express();
 
+app.use(json());
+app.use(urlencoded({ extended: true }));
 connectDB();
-
-app.use(express.json());
 app.use(router);
-app.use('/docs', swagguerUi.serve, swagguerUi.setup(swaggerDocs));
-
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-//   });
 app.use(cors());
-
-// const corsOptions = {
-//     origin: `${process.env.APP}`, 
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-//     allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
-//   };
-  
-// app.use(cors(corsOptions));
+app.use('/docs', swagguerUi.serve, swagguerUi.setup(swaggerDocs));
 
 export { app };
