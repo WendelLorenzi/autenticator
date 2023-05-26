@@ -5,12 +5,12 @@ import 'dotenv/config';
 import connectDB from './providers/mongoDB/connection';
 import swagguerUi from 'swagger-ui-express';
 import swaggerDocs from './swagger.json';
-import { json, urlencoded  } from 'body-parser';
+// import { json, urlencoded  } from 'body-parser';
 
 const app = express();
 
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(express.json());
+// app.use(urlencoded({ extended: true }));
 connectDB();
 app.use(router);
 app.use(cors());

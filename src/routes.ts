@@ -9,7 +9,7 @@ const router = Router();
 
 router.get('/', (request, response) => {
     return response.status(200).json({ message: 'Server ON' });
-  });
+});
 
 router.post('/register', authController.handle, (request, response) => {
   return registerController.handle(request, response);

@@ -1,4 +1,4 @@
-import { User } from "../entities/User";
+import { ImongoFindOneUserDTO, User } from "../entities/User";
 import modelUsers from "../providers/mongoDB/UserModel";
 import { IUsersRepository } from "./interfaces/IUsersRepository";
 
@@ -16,11 +16,12 @@ export class UsersRepository implements IUsersRepository {
 
     async findByEmail(mail: string): Promise<User> {
       try {
-          const document = await this.user.findOne({ email: mail });
+          const document = await this.user.findOne({ email: mail }).exec();
           if (!document) {
             throw new Error('User not found');
           }
-          return document;
+          const mongoUser = new ImongoFindOneUserDTO(document);
+          return mongoUser.user;
       } catch (err) {
         console.log('Error accessing user in the database:', err);
         throw err;

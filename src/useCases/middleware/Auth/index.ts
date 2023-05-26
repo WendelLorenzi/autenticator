@@ -6,10 +6,10 @@ const mongosUsersTokenRepository = new UsersTokenRepository();
 
 const authUseCase = new AuthUseCase(
   mongosUsersTokenRepository
-)
+);
 
 const authController = new AuthController(
     authUseCase
-)
+);
 
 export { authUseCase, authController }

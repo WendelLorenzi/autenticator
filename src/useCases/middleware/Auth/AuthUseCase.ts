@@ -10,14 +10,14 @@ export class AuthUseCase {
         data: AuthRequestDTO
     ) {
         if (data.token) {
-            console.log('data.token', data.token);
             const userToken = await this.userTokenRepository.getUserToken(data.token);
             if (userToken != undefined) {
-                if (JWTservice.JWTVerifier(userToken.token)) {
+                if (!JWTservice.JWTVerifier(userToken.token)) {
                     const newToken = JWTservice.sign({ uid: userToken.user._id });
                     await this.userTokenRepository.updateToken(userToken.user, newToken);
                     return newToken;
                 }
+                console.log('token');
                 return userToken.token;
             }
             return undefined;

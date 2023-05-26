@@ -1,5 +1,5 @@
 import { User } from "../entities/User";
-import { UserToken } from "../entities/UserToken";
+import { ImongoFindOneTokenDTO, UserToken } from "../entities/UserToken";
 import modelUsersToken from "../providers/mongoDB/UserTokenModel";
 import { IUsersTokenRepository } from "./interfaces/IUsersTokenReposytory";
 
@@ -55,9 +55,10 @@ export class UsersTokenRepository implements IUsersTokenRepository {
 
     async getUserToken(token: string): Promise<UserToken | undefined> {
         try {
-            const document = await this.userToken.findOne({ token });
+            const document = await this.userToken.findOne({ token }).exec();
             if(document) {
-              return new UserToken(document);
+                const doc = new ImongoFindOneTokenDTO(document);
+                return new UserToken({ user: doc.user, token: doc.token });
             }
             return undefined;
         } catch (err) {
@@ -66,4 +67,3 @@ export class UsersTokenRepository implements IUsersTokenRepository {
         }
       }
 }
-

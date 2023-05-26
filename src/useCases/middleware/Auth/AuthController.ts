@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { AuthUseCase } from "./AuthUseCase";
+import { Request, Response } from "express";
 
 export class AuthController {
     constructor(
@@ -7,12 +7,12 @@ export class AuthController {
     ) {}
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const token = request.headers['x-access-token'];
+        const headerToken = request.headers['x-access-token'];
 
         try {
-            if (typeof token === 'string') {
+            if (typeof headerToken === 'string') {
                 const usertoken = await this.authUseCase.execute({
-                    token
+                    token: headerToken
                 });
                 console.log('userToken', usertoken);
                 if (usertoken != undefined) return response.status(200).json(usertoken);

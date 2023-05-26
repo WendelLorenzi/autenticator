@@ -16,3 +16,17 @@ export class User {
         }
     }
 }
+
+export class ImongoFindOneUserDTO {
+    public _id!: string;
+    public user!: User;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(props: any) {
+        const { _doc } = props;
+        if (_doc) {
+            return _doc;
+        }
+        return props;
+    }
+}

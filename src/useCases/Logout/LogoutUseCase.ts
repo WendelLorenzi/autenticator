@@ -11,9 +11,10 @@ export class LogoutUseCase {
         data: LogoutRequestDTO
     ) {
         const user = await this.usersRepository.findById(data._id);
+        console.log('user use case', user);
         if (user) {
             const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user);
-            console.log('get userToken exist', userTokenAlreadExists);
+            console.log('userToken exist', userTokenAlreadExists);
             if (userTokenAlreadExists != (undefined && {})) {
                 console.log('userToken exist', userTokenAlreadExists);
                 if(await this.usersTokenRepository.deleteUserToken(userTokenAlreadExists)) {
