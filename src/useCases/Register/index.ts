@@ -1,5 +1,6 @@
 import { UsersRepository } from "../../repositories/UsersRepository";
 import { UsersTokenRepository } from "../../repositories/UsersTokenRepository";
+import { authMiddleware } from "../middleware";
 import { RegisterController } from "./RegisterController";
 import { RegisterUseCase } from "./RegisterUseCase";
 
@@ -12,7 +13,8 @@ const registerUseCase = new RegisterUseCase(
 )
 
 const registerController = new RegisterController(
-    registerUseCase
+    registerUseCase,
+    authMiddleware
 )
 
 export {registerUseCase, registerController }

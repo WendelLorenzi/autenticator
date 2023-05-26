@@ -1,4 +1,5 @@
 import { UsersRepository } from "../../repositories/UsersRepository";
+import { authMiddleware } from "../middleware";
 import { getUserController } from "./getUserController";
 import { GetUserUseCase } from "./getUserUseCase";
 
@@ -9,7 +10,8 @@ const getUserUseCase = new GetUserUseCase(
 )
 
 const getuserController = new getUserController(
-    getUserUseCase
+    getUserUseCase,
+    authMiddleware
 )
 
 export { getUserUseCase, getuserController }

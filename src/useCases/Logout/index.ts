@@ -1,5 +1,6 @@
 import { UsersRepository } from "../../repositories/UsersRepository";
 import { UsersTokenRepository } from "../../repositories/UsersTokenRepository";
+import { authMiddleware } from "../middleware";
 import { LogoutController } from "./LogoutController";
 import { LogoutUseCase } from "./LogoutUseCase";
 
@@ -12,7 +13,8 @@ const logoutUseCase = new LogoutUseCase(
 )
 
 const logoutController = new LogoutController(
-    logoutUseCase
+    logoutUseCase,
+    authMiddleware
 )
 
 export { logoutUseCase, logoutController }

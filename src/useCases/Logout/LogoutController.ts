@@ -1,23 +1,28 @@
 import { Request, Response } from "express";
 import { LogoutUseCase } from "./LogoutUseCase";
+import { AuthMiddleware } from "../middleware/AuthMiddleware";
 
 export class LogoutController {
     constructor(
         private logoutUseCase: LogoutUseCase,
+        private authmiddleware: AuthMiddleware
     ) {}
 
     async handle(request: Request, response: Response): Promise<Response> {
         const { _id, email } = request.body;
-        console.log('_id, email', _id, email);
+        const auth = await this.authmiddleware.handle(request);
 
         try {
-            const del = await this.logoutUseCase.execute({
-                _id,
-                email,
-            });
-            console.log('del', del);
-            if (del) return response.status(200).end();
-            return response.status(400).send();
+            if (auth) {
+                const del = await this.logoutUseCase.execute({
+                    _id,
+                    email,
+                });
+                console.log('del', del);
+                if (del) return response.status(200).end();
+                return response.status(400).send();
+            }
+            return response.status(401).end();
         }
         catch {
             return response.status(400).json({
