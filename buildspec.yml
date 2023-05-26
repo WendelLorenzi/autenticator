@@ -7,7 +7,6 @@ phases:
     commands:
       - npm install -g yarn typescript
       - yarn install
-      - yarn
   build:
     commands:
       - yarn build
