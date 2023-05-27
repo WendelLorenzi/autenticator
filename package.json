@@ -1,17 +1,20 @@
 {
   "name": "autenticator",
   "version": "1.0.0",
-  "description": "",
+  "description": "auth users API",
   "main": "index.js",
+  "keywords": [],
+  "author": "Wendel Lorenzi",
+  "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "build": "npx tsc",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/server.ts",
     "start": "node dist/server.js",
     "lint": "eslint . --ext .ts"
   },
-  "keywords": [],
-  "author": "Wendel Lorenzi",
-  "license": "ISC",
   "dependencies": {
     "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.1.0",
