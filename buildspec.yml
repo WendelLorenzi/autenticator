@@ -11,7 +11,18 @@ phases:
   build:
     commands:
       - yarn build
+
   post_build:
     commands:
       - echo "Starting the project..."
       - yarn start
+
+artifacts:
+  files:
+    - yarn.lock
+    - package.json
+    - 'dist/**/*'
+    - 'build/**/*'
+    - '.platform/**/*' # AWS Elastic Beanstalk configuration files
+    - '.ebextensions/**/*' # AWS Elastic Beanstalk configuration files
+  discard-paths: no
