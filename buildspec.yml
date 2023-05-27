@@ -13,11 +13,6 @@ phases:
     commands:
       - yarn run build
 
-  post_build:
-    commands:
-      - echo "Starting the project..."
-      - yarn run start
-
 artifacts:
   files:
     - yarn.lock
