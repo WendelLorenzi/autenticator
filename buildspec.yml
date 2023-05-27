@@ -8,14 +8,15 @@ phases:
       - echo "Installing dependencies..."
       - npm install -g yarn typescript
       - yarn install
+      - yarn
   build:
     commands:
-      - yarn build
+      - yarn run build
 
   post_build:
     commands:
       - echo "Starting the project..."
-      - yarn start
+      - yarn run start
 
 artifacts:
   files:
