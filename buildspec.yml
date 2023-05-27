@@ -5,11 +5,11 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
+      - echo "Installing dependencies..."
       - npm install -g yarn typescript
       - yarn install
   build:
     commands:
-      - yarn
       - yarn build
   post_build:
     commands:
