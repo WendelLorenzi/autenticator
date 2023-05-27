@@ -1,17 +1,30 @@
+
 version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 16
     commands:
-      - echo "Installing dependencies..."
-      - npm install -g yarn typescript
-      - yarn
+      - echo update npm...
+      - npm install -g n
+      - n latest
+      - npm update -g npm
+      - echo node -v
+      - node -v
+      - echo npm -v
+      - npm -v
+      - echo install yarn...
+      - npm install -g yarn
+      - echo yarn -v
+      - yarn -v
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - yarn install
   build:
     commands:
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
       - yarn run build
-
 artifacts:
   files:
     - yarn.lock
