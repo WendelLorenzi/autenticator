@@ -1,4 +1,3 @@
-import { User } from "../entities/User";
 import { ImongoFindOneTokenDTO, UserToken } from "../entities/UserToken";
 import modelUsersToken from "../providers/mongoDB/UserTokenModel";
 import { IUsersTokenRepository } from "./interfaces/IUsersTokenReposytory";
@@ -15,22 +14,23 @@ export class UsersTokenRepository implements IUsersTokenRepository {
       }
     }
 
-    async TokenExist(user: User): Promise<UserToken | undefined> {
+    async TokenExist(userid: string): Promise<UserToken | undefined> {
       try {
-          const document = await this.userToken.find({ user: { $in: [user] } });
+          const document = await this.userToken.findOne({ userId: userid });
+          console.log('document UserToken repository', document);
           if(!document) {
-            return new UserToken({});
+            return undefined;
           }
-          return new UserToken({ user: document[0].user, token: document[0].token });
+          return new UserToken({ userId: document.userId, token: document.token });
       } catch (err) {
         console.log('erro user bd', err);
       }
     }
 
-    async updateToken(user: User, newToken: string): Promise<void> {
+    async updateToken(userId: string, newToken: string): Promise<void> {
       try {
           await this.userToken.findOneAndUpdate(
-            { 'user': user },
+            { 'userId': userId },
             { $set: { token: newToken } },
             { new: true }
             );
@@ -39,9 +39,9 @@ export class UsersTokenRepository implements IUsersTokenRepository {
       }
     }
 
-    async deleteUserToken(usertoken: UserToken): Promise<boolean | undefined> {
+    async deleteUserToken(usertoken: string): Promise<boolean | undefined> {
       try {
-          const document = await this.userToken.deleteOne({ usertoken });
+          const document = await this.userToken.deleteOne({ token: usertoken });
           console.log('document delet', document);
           if(document.deletedCount === 0) {
             return false;

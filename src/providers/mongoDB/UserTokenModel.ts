@@ -7,7 +7,7 @@ export type IUserTokenSchema = UserToken & Document;
 
 const UserTokenSchema: Schema = new Schema(
   {
-    user: { type: Object },
+    userId: { type: String },
     token: { type: String },
   },
   {

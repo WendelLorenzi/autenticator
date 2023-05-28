@@ -1,7 +1,7 @@
 import { User } from './User';
 
 export class UserToken {
-    public user!: User;
+    public userId!: string;
     public token!: string;
 
     constructor(props: object) {

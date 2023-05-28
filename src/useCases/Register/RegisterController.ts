@@ -10,18 +10,18 @@ export class RegisterController {
 
     async handle(request: Request, response: Response): Promise<Response> {
         const { name, email, password } = request.body;
-        const auth = await this.authmiddleware.handle(request);
+        // const auth = await this.authmiddleware.handle(request);
 
         try {
-            if (auth) {
+            // if (auth) {
                 const token = await this.registerUseCase.execute({
                     name,
                     email,
                     password
                 });
-                if (token) return response.status(200).json({ "acessToken": token });
-                return response.status(200).send();
-            }
+                if (token) return response.status(200).header("x-acess-token", token).send();
+                return response.status(400).end();
+            // }
             return response.status(401).end();
         }
         catch {

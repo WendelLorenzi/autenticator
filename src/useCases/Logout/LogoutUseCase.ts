@@ -10,20 +10,37 @@ export class LogoutUseCase {
     async execute(
         data: LogoutRequestDTO
     ) {
-        const user = await this.usersRepository.findById(data._id);
-        console.log('user use case', user);
-        if (user) {
-            const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user);
-            console.log('userToken exist', userTokenAlreadExists);
-            if (userTokenAlreadExists != (undefined && {})) {
+        if(data._id) {
+            const user = await this.usersRepository.findById(data._id);
+            console.log('user use case', user);
+            if (user) {
+                const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user._id);
                 console.log('userToken exist', userTokenAlreadExists);
-                if(await this.usersTokenRepository.deleteUserToken(userTokenAlreadExists)) {
-                    return true;
+                if (userTokenAlreadExists != (undefined && {})) {
+                    console.log('userToken exist', userTokenAlreadExists);
+                    if(await this.usersTokenRepository.deleteUserToken(userTokenAlreadExists.token)) {
+                        return true;
+                    }
+                    return false;
                 }
                 return false;
             }
-            return false;
         }
-        throw new Error('user id not exists');
+        if(data.email) {
+            const user = await this.usersRepository.findByEmail(data.email);
+            if (user) {
+                const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user._id);
+                console.log('userToken exist', userTokenAlreadExists);
+                if (userTokenAlreadExists != (undefined && {})) {
+                    console.log('userToken exist', userTokenAlreadExists);
+                    if(await this.usersTokenRepository.deleteUserToken(userTokenAlreadExists.token)) {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+        }
+        throw new Error('user not exists');
     }
 }
