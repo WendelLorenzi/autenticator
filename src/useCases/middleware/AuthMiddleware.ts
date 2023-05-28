@@ -7,7 +7,7 @@ export class AuthMiddleware {
     ) {}
 
     async handle(request: Request): Promise<boolean> {
-        const headerToken = request.headers['x-access-token'];
+        const headerToken = request.headers['x-auth-token'];
 
         try {
             if (typeof headerToken === 'string') {

@@ -18,7 +18,6 @@ export class LogoutController {
                     _id,
                     email,
                 });
-                console.log('del', del);
                 if (del) return response.status(200).end();
                 return response.status(400).send();
             }
