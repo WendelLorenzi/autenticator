@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 interface IJWTData {
     uid: string;
+    exp?: number;
 }
 
 const sign = (data: IJWTData) => {
@@ -30,11 +31,10 @@ const verify = (tokn: string): IJWTData | { "error": 'JWT_SECRET_NOT_FOUND' } | 
 
 const JWTVerifier = (token: string): boolean => {
     try {
-        const decodedToken = jwt.decode(token) as jwt.JwtPayload;
+        const decodedToken = verify(token) as jwt.JwtPayload;
         if (!decodedToken || typeof decodedToken.exp === 'undefined') {
           return true;
         }
-        
         const currentTimestamp = Math.floor(Date.now() / 1000);
         return decodedToken.exp < currentTimestamp;
       } catch (error) {

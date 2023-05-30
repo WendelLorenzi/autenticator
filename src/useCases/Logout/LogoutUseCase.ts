@@ -15,9 +15,7 @@ export class LogoutUseCase {
             console.log('user use case', user);
             if (user) {
                 const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user._id);
-                console.log('userToken exist', userTokenAlreadExists);
                 if (userTokenAlreadExists != (undefined && {})) {
-                    console.log('userToken exist', userTokenAlreadExists);
                     if(await this.usersTokenRepository.deleteUserToken(userTokenAlreadExists.token)) {
                         return true;
                     }
@@ -30,9 +28,7 @@ export class LogoutUseCase {
             const user = await this.usersRepository.findByEmail(data.email);
             if (user) {
                 const userTokenAlreadExists = await this.usersTokenRepository.TokenExist(user._id);
-                console.log('userToken exist', userTokenAlreadExists);
                 if (userTokenAlreadExists != (undefined && {})) {
-                    console.log('userToken exist', userTokenAlreadExists);
                     if(await this.usersTokenRepository.deleteUserToken(userTokenAlreadExists.token)) {
                         return true;
                     }

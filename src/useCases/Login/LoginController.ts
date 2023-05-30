@@ -15,7 +15,7 @@ export class LoginController {
                         password
                     });
                     if (typeof usertoken != 'string' && usertoken != undefined) {                   
-                        return response.status(200).header("x-auth-token", usertoken.token).send();
+                        return response.status(200).header("x-auth-token", usertoken.token).json({ token: usertoken.token }).send();
                     }
                     return response.status(401).end();
                 }

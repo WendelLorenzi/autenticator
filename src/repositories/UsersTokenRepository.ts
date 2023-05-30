@@ -17,7 +17,6 @@ export class UsersTokenRepository implements IUsersTokenRepository {
     async TokenExist(userid: string): Promise<UserToken | undefined> {
       try {
           const document = await this.userToken.findOne({ userId: userid });
-          console.log('document UserToken repository', document);
           if(!document) {
             return undefined;
           }
@@ -42,7 +41,6 @@ export class UsersTokenRepository implements IUsersTokenRepository {
     async deleteUserToken(usertoken: string): Promise<boolean | undefined> {
       try {
           const document = await this.userToken.deleteOne({ token: usertoken });
-          console.log('document delet', document);
           if(document.deletedCount === 0) {
             return false;
           }

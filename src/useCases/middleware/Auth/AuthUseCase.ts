@@ -12,7 +12,7 @@ export class AuthUseCase {
         if (data.token) {
             const userToken = await this.userTokenRepository.getUserToken(data.token);
             if (userToken != undefined) {
-                if (!JWTservice.JWTVerifier(userToken.token)) {
+                if (JWTservice.JWTVerifier(userToken.token)) {
                     const newToken = JWTservice.sign({ uid: userToken.userId });
                     await this.userTokenRepository.updateToken(userToken.userId, newToken);
                     return newToken;
