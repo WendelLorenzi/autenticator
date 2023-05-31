@@ -14,7 +14,7 @@ export class AuthController {
                 const usertoken = await this.authUseCase.execute({
                     token: headerToken
                 });
-                if (usertoken != undefined) return response.status(200).header("x-auth-token", usertoken).send();
+                if (usertoken != undefined) return response.status(200).header("x-auth-token", usertoken).json({token: usertoken}).send();
             }
             return response.status(403).send("A token is required for authentication");
         }
