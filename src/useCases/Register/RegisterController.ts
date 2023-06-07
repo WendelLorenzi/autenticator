@@ -19,7 +19,7 @@ export class RegisterController {
                     email,
                     password
                 });
-                if (token) return response.status(200).header("x-auth-token", token).json(token).send();
+                if (token) return response.status(200).header("Authorization", "Bearer " + token).json({ token }).send();
                 return response.status(400).end();
             }
             return response.status(401).end();

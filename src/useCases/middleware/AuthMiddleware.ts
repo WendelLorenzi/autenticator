@@ -7,10 +7,11 @@ export class AuthMiddleware {
     ) {}
 
     async handle(request: Request): Promise<boolean> {
-        const headerToken = request.headers['x-auth-token'];
+        const authorizationHeader = request.headers.authorization;
+        const headerToken = authorizationHeader ? authorizationHeader.replace('Bearer ', '') : null;
 
         try {
-            if (typeof headerToken === 'string') {
+            if (typeof headerToken === 'string' && headerToken !== null) {
                 const usertoken = await this.authUseCase.execute({
                     token: headerToken
                 });
