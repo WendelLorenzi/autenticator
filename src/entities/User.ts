@@ -15,3 +15,13 @@ export class User {
         }
     }
 }
+
+export class UserEntitie {
+    _id!: string;
+    name!: string;
+    email!: string;
+    constructor(props: any) {
+        Object.assign(this, props);
+    }
+  }
+  

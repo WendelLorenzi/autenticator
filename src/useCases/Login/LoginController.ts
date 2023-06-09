@@ -15,7 +15,7 @@ export class LoginController {
                         password
                     });
                     if (typeof usertoken != 'string' && usertoken != undefined) {                   
-                        return response.status(200).header("Authorization", "Bearer " + usertoken.token).json({ token: usertoken.token }).send();
+                        return response.status(200).header("Authorization", "Bearer " + usertoken.token).json({ user: usertoken }).send();
                     }
                     return response.status(401).end();
                 }
