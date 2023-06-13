@@ -5,15 +5,19 @@ import PasswordEncryptor from "../../providers/services/PasswordEncryptor";
 import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository";
 import { IUsersTokenRepository } from "../../repositories/interfaces/IUsersTokenReposytory";
 import { RegisterRequestDTO } from "./ResgisteDTO";
+import { IMailProvider } from '../../providers/ResendMail/IMailProvider';
+import createRegisterBody from '../../utils/mailRegisterBody';
 
 export class RegisterUseCase {
     constructor(
         private usersRepository: IUsersRepository,
         private usersTokenRepository: IUsersTokenRepository,
+        private mailProvider: IMailProvider,
     ) {}
     async execute(
         data: RegisterRequestDTO
     ) {
+        console.log('entrou use case');
         const userAlreadExists = await this.usersRepository.UserAlreadExists(data.email);
         if (userAlreadExists) {
             throw new Error('User alread exists');
@@ -25,13 +29,15 @@ export class RegisterUseCase {
         const user = new User({ name: data.name, email: data.email, password: data.password }, userId);
         if ((user._id) != undefined) {
             const token = JWTservice.sign({ uid: user._id });
-            if (token != 'JWT_SECRET_NOT_FOUND' &&'JWT_SECRET_NOT_FOUND') {
+            if (token != 'JWT_SECRET_NOT_FOUND' && 'JWT_SECRET_NOT_FOUND') {
                 const userToken = {
                     userId: user._id,
                     token
                 };
                 await this.usersTokenRepository.create(userToken);
                 await this.usersRepository.create(user);
+                console.log('user', user);
+                await this.mailProvider.sendMail(createRegisterBody(user.email, user.password));
                 return userToken.token;
             }
         }

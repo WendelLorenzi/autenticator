@@ -10,10 +10,9 @@ export class RegisterController {
 
     async handle(request: Request, response: Response): Promise<Response> {
         const { name, email, password } = request.body;
-        const auth = await this.authmiddleware.handle(request);
+        // const auth = await this.authmiddleware.handle(request);
 
         try {
-            if (auth) {
                 const token = await this.registerUseCase.execute({
                     name,
                     email,
@@ -21,8 +20,7 @@ export class RegisterController {
                 });
                 if (token) return response.status(200).header("Authorization", "Bearer " + token).json({ token }).send();
                 return response.status(400).end();
-            }
-            return response.status(401).end();
+           //  return response.status(401).end();
         }
         catch {
             return response.status(400).json({

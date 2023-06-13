@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.5.0",
     "mongoose": "^7.2.0",
+    "resend": "^0.15.1",
     "swagger-ui-express": "^4.6.3",
     "uuidv4": "^6.2.13"
   },
