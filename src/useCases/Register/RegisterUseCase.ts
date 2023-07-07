@@ -6,7 +6,7 @@ import { IUsersRepository } from "../../repositories/interfaces/IUsersRepository
 import { IUsersTokenRepository } from "../../repositories/interfaces/IUsersTokenReposytory";
 import { RegisterRequestDTO } from "./ResgisteDTO";
 import { IMailProvider } from '../../providers/ResendMail/IMailProvider';
-import createRegisterBody from '../../utils/mailRegisterBody';
+// import createRegisterBody from '../../utils/mailRegisterBody';
 
 export class RegisterUseCase {
     constructor(
@@ -17,7 +17,6 @@ export class RegisterUseCase {
     async execute(
         data: RegisterRequestDTO
     ) {
-        console.log('entrou use case');
         const userAlreadExists = await this.usersRepository.UserAlreadExists(data.email);
         if (userAlreadExists) {
             throw new Error('User alread exists');
@@ -36,8 +35,7 @@ export class RegisterUseCase {
                 };
                 await this.usersTokenRepository.create(userToken);
                 await this.usersRepository.create(user);
-                console.log('user', user);
-                await this.mailProvider.sendMail(createRegisterBody(user.email, user.password));
+                // await this.mailProvider.sendMail(createRegisterBody(user.email, user.password));
                 return userToken.token;
             }
         }

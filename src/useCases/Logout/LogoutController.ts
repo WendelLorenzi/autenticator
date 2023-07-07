@@ -9,14 +9,15 @@ export class LogoutController {
     ) {}
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const { _id, email } = request.body;
+        const { _id } = request.body;
         const auth = await this.authmiddleware.handle(request);
+
+        console.log('_id', _id);
 
         try {
             if (auth) {
                 const del = await this.logoutUseCase.execute({
                     _id,
-                    email,
                 });
                 if (del) return response.status(200).end();
                 return response.status(400).send();

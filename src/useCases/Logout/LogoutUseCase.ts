@@ -11,22 +11,12 @@ export class LogoutUseCase {
     async execute(
         data: LogoutRequestDTO
     ) {
-        if (data._id && data.email) {
+        if (data._id) {
             const userById = await this.usersRepository.findById(data._id);
             if (userById) {
                 return this._userVerify(userById);
             }
-            const userByEmail = await this.usersRepository.findByEmail(data.email);
-            if (userByEmail) return this._userVerify(userByEmail);
             throw new Error('Not parameters required');
-        }
-        if(data._id) {
-            const user = await this.usersRepository.findById(data._id);
-            return this._userVerify(user);
-        }
-        if(data.email) {
-            const user = await this.usersRepository.findByEmail(data.email);
-            return this._userVerify(user);
         }
         throw new Error('user not exists');
     }
