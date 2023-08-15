@@ -12,8 +12,6 @@ export class LogoutController {
         const { _id } = request.body;
         const auth = await this.authmiddleware.handle(request);
 
-        console.log('_id', _id);
-
         try {
             if (auth) {
                 const del = await this.logoutUseCase.execute({
