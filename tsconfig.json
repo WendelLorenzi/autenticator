@@ -7,9 +7,24 @@
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
     "strict": true,        
-    "allowJs": true,                                /* Enable all strict type-checking options. */
+    "allowJs": true,     
+    "removeComments": true,
+    "strictPropertyInitialization": false,                             
     "skipLibCheck": true,
-    "resolveJsonModule": true                                 /* Skip type checking all .d.ts files. */
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+        "@providers/*": ["./providers/*"],
+        "@entities/*": ["entities/*"],
+        "@repositories/*": ["repositories/*"],
+        "@useCases/*": ["useCases/*"],
+        "@tests/*": ["tests/*"],
+        "@app": ["app.ts"]
+      },
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/@types"
+      ],                                /* Skip type checking all .d.ts files. */
   },
   "include": [
     "src/**/*ts"
